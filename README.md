@@ -8,7 +8,7 @@
 
     npm install -g create-react-native-app
 
-패키지로 프로젝트 생성
+패키지로 프로젝트 생성/실행
 
     create-react-native-app AwesomeProject
     cd AwesomeProject
@@ -16,8 +16,7 @@
 
     실행 에러가 날 경우 watchman 설치 
 
-- Expo 클라이언트앱을 설치하여 QR code 스캔을 통한 프로젝트 열기 가능
-
+- Expo 클라이언트앱을 설치하여 QR code 스캔을 통한 프로젝트 열기
 
 
 # Hello World 타이핑
@@ -25,7 +24,8 @@
 - reactive-native-cli 설치후 "react-native init" 커맨드로 android, ios프로젝트를 같이 생성 가능.
 
 
-ES2015 문법을 익혀야 하는가.
+ES2015 문법을 대강이라도 익혀야 할듯
+
 리엑트에서 임베드되는 JSX라는 마크업으로 개발 필요
 
 
