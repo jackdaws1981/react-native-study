@@ -39,6 +39,29 @@ Expo 클라이언트앱을 설치하여 QR code 스캔을 통한 프로젝트 �
     - 참조하는 경우 state변수로 사용하고, 생성자가 아닌 다른곳에서 값을 변경시 setState메서드를 사용한다.
     - setState메서드 호출시 다시 렌더링된다.
 
+
+## Style
+- 기존 CSS의 '-'로 되어있던 프로퍼티들이 카멜형식의 변수이름을 변경됨 
+```
+background-clor => backgroundColor
+```
+
+
+## Height and Width
+- 고정 길이
+    - 단위는 존재하지 않고 픽셀만 표기
+- 유동 길이
+    - 부모뷰의 flex값이 설정 되어있지않으면 자식뷰들은 출력되지 않는다. ( 내부적으로 부모뷰의 크기를 상대적 비율로 flex값으로 나누어 계산하는듯 )
+    - flex값이 사용되면 , height의 값은 무시처리
+
+## Layout with Flexbox
+- flexDirection
+    - flex를 적용할 방향을 설정한다. row, column, 기본값은 column
+- Justify Contet
+    - flex-start, center, flex-end, space-around, space-between and space-evenly (정의가 없다고 나오고 있음)
+- Align Items
+    - flex-start, center, flex-end, and stretch.
+
 ## 해야할일
 - 프로젝트생성되는 설정파일의 의미
 - ES2015 문법을 대강이라도 익혀야 할듯
