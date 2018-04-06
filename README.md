@@ -62,6 +62,27 @@ background-clor => backgroundColor
 - Align Items
     - flex-start, center, flex-end, and stretch.
 
+
+## Handling Text Input
+- 딱히 별 내용 없음, 내부 state 객체에 대한 핸들링 메서드
+
+## Handling Touches
+- TouchbleHighlight : 기본속성, 터치시 하이라이트 색상 처리
+- TouchableOpacity : 버튼의 opacity를 변경한다
+- TouchableNativeFeedback : 네이티브와 연동한다
+- TouchableWithoutFeedback : 액션에 대한 로직만 처리, 화면상 변경사항 없음
+
+onPress , onLongPress 함께 적용 가능
+
+## Using a ScrollView
+- require 사용시 한번 로드된 객체는 캐싱된다
+- horizontal = {true|false} 프로퍼티를 사용하여 방향을 정한다
+- maximumZoomScale={number} minimumZoomScale={number} 를 사용하여 zoom size validation
+
+## Using a ListView
+- FlatList : 리스트형태 출력
+- SectionList : 섹션 헤더 출력
+
 ## 해야할일
 - 프로젝트생성되는 설정파일의 의미
 - ES2015 문법을 대강이라도 익혀야 할듯
