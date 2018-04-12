@@ -27,12 +27,12 @@ Expo 클라이언트앱을 설치하여 QR code 스캔을 통한 프로젝트 �
 
 ## Props
 - props == 프로퍼티
-    
 - 외부에서 컴포넌트 생성시 설정하면 , 자동으로 this.props의 어트리뷰트로 바인딩되어 사용가능
-
 - 아래 문법은 AwesomeProject의 앱을 실행할때 Banans컴포넌트를 출력하라는 의미
 
-    AppRegistry.registerComponent('AwesomeProject',()=>Bananas)
+```
+AppRegistry.registerComponent('AwesomeProject',()=>Bananas)
+```
 
 ## State
 - props는 외부에서 접근가능한반면, State는 컴포넌트 내부에서 사용됨.
@@ -82,6 +82,45 @@ onPress , onLongPress 함께 적용 가능
 ## Using a ListView
 - FlatList : 리스트형태 출력
 - SectionList : 섹션 헤더 출력
+
+## Networking
+- 리액트는 rest 통신을 위한 fetch api 를 제공한다
+```
+
+// 비동기로 처리해야 한다.
+function getMoviesFromApiAsync() {
+  return fetch('https://facebook.github.io/react-native/movies.json')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      return responseJson.movies;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+// ES2017의 async/await 문법을 이용하여 처리할수도 있다.
+async function getMoviesFromApi() {
+  try {
+    let response = await fetch(
+      'https://facebook.github.io/react-native/movies.json'
+    );
+    let responseJson = await response.json();
+    return responseJson.movies;
+  } catch (error) {
+    console.error(error);
+  }
+}
+```
+- *** iOS의 경우 암호화되지 않은 통신의 경우 차단하기 때문에 , 설정이 필요하다 ***
+- 당연히 fetch대신 XMLHttpRequest 를 사용할수도 있다.
+- 당연히 기본 웹소켓도 사용
+
+
+## More Resources
+- [Awesome React Native](http://www.awesome-react-native.com/)에 가면 좋은 라이브러리들이 많다드라
+- 깃허브에 가면 예제가 많다드라
+- 리액트개발을 할수 있는 개발킷트가 좋은게 많다, 빨리 시작해라
 
 ## 해야할일
 - 프로젝트생성되는 설정파일의 의미
