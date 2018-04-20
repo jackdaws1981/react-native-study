@@ -576,56 +576,155 @@
 
 
 // =============================================== Networking
-import React from 'react';
-import { AppRegistry, FlatList, ActivityIndicator, Text, View  } from 'react-native';
+// import React from 'react';
+// import { AppRegistry, FlatList, ActivityIndicator, Text, View  } from 'react-native';
 
-export default class FetchExample extends React.Component {
+// export default class FetchExample extends React.Component {
 
-  constructor(props){
-    super(props);
-    this.state ={ isLoading: true}
-  }
+//   constructor(props){
+//     super(props);
+//     this.state ={ isLoading: true}
+//   }
 
-  componentDidMount(){
-    return fetch('https://facebook.github.io/react-native/movies.json')
-      .then((response) => response.json())
-      .then((responseJson) => {
+//   componentDidMount(){
+//     return fetch('https://facebook.github.io/react-native/movies.json')
+//       .then((response) => response.json())
+//       .then((responseJson) => {
 
-        this.setState({
-          isLoading: false,
-          dataSource: responseJson.movies,
-        }, function(){
+//         this.setState({
+//           isLoading: false,
+//           dataSource: responseJson.movies,
+//         }, function(){
 
-        });
+//         });
 
-      })
-      .catch((error) =>{
-        console.error(error);
-      });
-  }
+//       })
+//       .catch((error) =>{
+//         console.error(error);
+//       });
+//   }
 
 
 
-  render(){
+//   render(){
 
-    if(this.state.isLoading){
-      return(
-        <View style={{flex: 1, padding: 20}}>
-          <ActivityIndicator/>
-        </View>
-      )
-    }
+//     if(this.state.isLoading){
+//       return(
+//         <View style={{flex: 1, padding: 20}}>
+//           <ActivityIndicator/>
+//         </View>
+//       )
+//     }
 
-    return(
-      <View style={{flex: 1, paddingTop:20}}>
-        <FlatList
-          data={this.state.dataSource}
-          renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
-          keyExtractor={(item, index) => index}
-        />
-      </View>
-    );
-  }
-}
-// skip this line if using Create React Native App
-AppRegistry.registerComponent('AwesomeProject', () => FetchExample);
+//     return(
+//       <View style={{flex: 1, paddingTop:20}}>
+//         <FlatList
+//           data={this.state.dataSource}
+//           renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
+//           keyExtractor={(item, index) => index}
+//         />
+//       </View>
+//     );
+//   }
+// }
+// // skip this line if using Create React Native App
+// AppRegistry.registerComponent('AwesomeProject', () => FetchExample);
+
+
+
+
+// =============================================== Navigation (구동실패)
+// import {
+//   StackNavigator,
+// } from 'react-navigation';
+
+// const App = StackNavigator({
+//   Home: { screen: HomeScreen },
+//   Profile: { screen: ProfileScreen },
+// });
+
+// export default class HomeScreen extends React.Component {
+//   static navigationOptions = {
+//     title: 'Welcome',
+//   };
+//   render() {
+//     const { navigate } = this.props.navigation;
+//     return (
+//       <Button
+//         title="Go to Jane's profile"
+//         onPress={() =>
+//           navigate('Profile', { name: 'Jane' })
+//         }
+//       />
+//     );
+//   }
+// }
+
+// class ProfileScreen extends React.Component {
+ 
+//   render() {
+//     return (
+//       <Text>d;lkjfhdk;lfjh</Text>
+//     );
+//   }
+// }
+
+// // skip this line if using Create React Native App
+// AppRegistry.registerComponent('AwesomeProject', () => HomeScreen);
+
+
+
+// =============================================== NavigatorIOS (구동실패 - 탭영역이 출력이 안됩)
+// import React from 'react';
+// import PropTypes from 'prop-types';
+// import {Button, NavigatorIOS, Text, View} from 'react-native';
+
+// export default class NavigatorIOSApp extends React.Component {
+//   render() {
+//     return (
+//       <NavigatorIOS
+//         initialRoute={{
+//           component: MyScene,
+//           title: 'My Initial Scene',
+//           passProps: {index: 1},
+//         }}
+//         style={{flex: 1}}
+//       />
+//     );
+//   }
+// }
+
+// class MyScene extends React.Component {
+//   static propTypes = {
+//     route: PropTypes.shape({
+//       title: PropTypes.string.isRequired,
+//     }),
+//     navigator: PropTypes.object.isRequired,
+//   };
+
+//   constructor(props, context) {
+//     super(props, context);
+//     this._onForward = this._onForward.bind(this);
+//   }
+
+//   _onForward() {
+//     let nextIndex = ++this.props.index;
+//     this.props.navigator.push({
+//       component: MyScene,
+//       title: 'Scene ' + nextIndex,
+//       passProps: {index: nextIndex},
+//     });
+//   }
+
+//   render() {
+//     return (
+//       <View>
+//         <Text>Current Scene: {this.props.title}</Text>
+//         <Button
+//           onPress={this._onForward}
+//           title="Tap me to load the next scene !!!!"
+//         />
+//       </View>
+//     );
+//   }
+// }
