@@ -59,5 +59,50 @@ android
 
 ## Animations
 
+- 기본적으로 View, Text, Image, ScrollView에 애니메이션을 지정할수 있지만  `Animated.createAnimatedComponent()` 를 사용하여 컴포넌트를 커스텀할수 있다
+- Animtated.timing() 메서드에서 속성정의를 할수가 있다
+- 여러 애니메이션을 결합하여 새로운 애니메이션을 정의할수가 있다
+- interpolate는 여러 영역 세그먼트를 지정하여 애니메이션의 흐름을 지정가능
+- 특정애니메이션에서 다른애니메이션의 값을 참조할수 있다
+- useNativeDriver 속성으로 바로 native에서 구동되도록 지정가능
+    - 아직은 특정 플랫폼에서만 가능한 부분도 있다
+- LayoutAnimation을 이용하여 직접적인 측정이나 계산이 필요없이 레이아웃에 대한 애니메이션을 지정할수가 있다
+    -  특정 레이아웃의 값을 애니메이션 처리하면 연관 있는 다른 컴포넌트에도 자동으로 적용되는듯함
 
 
+## Accessibility
+
+- 단순히 UI의 출력에 대한 부분뿐만 아니라, accessible 관련 옵션을 사용하여 장애인을 위한 VoiceOver, TalkBack같은 기능들도 지원해준다.
+- 딱히 사용할 일은 별로 없을 듯하다
+
+### properties
+```
+accessible (iOS, Android)
+accessibilityLabel (iOS, Android)
+accessibilityTraits (iOS)
+accessibilityViewIsModal (iOS)
+accessibilityElementsHidden (iOS)
+onAccessibilityTap (iOS)
+onMagicTap (iOS)
+accessibilityComponentType (Android)
+accessibilityLiveRegion (Android)
+importantForAccessibility (Android)
+```
+
+
+
+## React LifeCycle 순서
+
+- 컴포넌트 생성
+    - constructor
+    - componentWillMount
+    - componentDidMount
+- 컴포넌트 업데이트
+    - componentWillReceiveProps
+    - [NEW] static getDerivedStateFromProps()
+    - shouldComponentUpdate
+    - componentWillUpdate
+    - [NEW] getSnapshotBeforeUpdate()
+    - componentDidUpdate
+- 컴포넌트 제거
+    - componentWillUnmount

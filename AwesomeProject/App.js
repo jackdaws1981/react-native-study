@@ -685,7 +685,7 @@
 //       <NavigatorIOS
 //         initialRoute={{
 //           component: MyScene,
-//           title: 'My Initial Scene',
+//           title: 'My dfkghjdkfgh Scene',
 //           passProps: {index: 1},
 //         }}
 //         style={{flex: 1}}
@@ -718,7 +718,7 @@
 
 //   render() {
 //     return (
-//       <View>
+//       <View style={{marginTop: 300}}>
 //         <Text>Current Scene: {this.props.title}</Text>
 //         <Button
 //           onPress={this._onForward}
@@ -728,3 +728,205 @@
 //     );
 //   }
 // }
+
+// =============================================== Animation fade in/out
+// import React from 'react';
+// import { Animated, Text, View } from 'react-native';
+
+// class FadeInView extends React.Component {
+//   state = {
+//     fadeAnim: new Animated.Value(0),  // Initial value for opacity: 0
+//   }
+
+//   componentDidMount() {
+//     Animated.timing(                  // Animate over time
+//       this.state.fadeAnim,            // The animated value to drive
+//       {
+//         toValue: 1,                   // Animate to opacity: 1 (opaque)
+//         duration: 10000,              // Make it take a while
+//       }
+//     ).start();                        // Starts the animation
+//   }
+
+//   render() {
+//     let { fadeAnim } = this.state;
+
+//     return (
+//       <Animated.View                 // Special animatable View
+//         style={{
+//           ...this.props.style,
+//           opacity: fadeAnim,         // Bind opacity to animated value
+//         }}
+//       >
+//         {this.props.children}
+//       </Animated.View>
+//     );
+//   }
+// }
+
+// // You can then use your `FadeInView` in place of a `View` in your components:
+// export default class App extends React.Component {
+//   render() {
+//     return (
+//       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+//         <FadeInView style={{width: 250, height: 50, backgroundColor: 'powderblue'}}>
+//           <Text style={{fontSize: 28, textAlign: 'center', margin: 10}}>Fading in</Text>
+//         </FadeInView>
+//       </View>
+//     )
+//   }
+// }
+
+
+// =============================================== Animation layout
+// import React from 'react';
+// import {
+//   NativeModules,
+//   LayoutAnimation,
+//   Text,
+//   TouchableOpacity,
+//   StyleSheet,
+//   View,
+// } from 'react-native';
+
+// const { UIManager } = NativeModules;
+
+// UIManager.setLayoutAnimationEnabledExperimental &&
+//   UIManager.setLayoutAnimationEnabledExperimental(true);
+
+// export default class App extends React.Component {
+//   state = {
+//     w: 100,
+//     h: 100,
+//   };
+
+//   _onPress = () => {
+//     // Animate the update
+//     LayoutAnimation.spring();
+//     this.setState({w: this.state.w + 15, h: this.state.h + 15})
+//   }
+
+//   render() {
+//     return (
+
+//       <View style={styles.container}>
+//         <View style={[styles.box, {width: this.state.w, height: this.state.h}]} />
+//         <TouchableOpacity 
+//             onPress={this._onPress}
+//             accessible={true}
+//             accessibilityLabel={'Tap me!'}
+//             accessibilityViewIsModal={true}
+//         >
+//           <View style={styles.button}>
+//             <Text style={styles.buttonText}>Press me!</Text>
+//           </View>
+//         </TouchableOpacity>
+//       </View>
+//     );
+//   }
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   box: {
+//     width: 200,
+//     height: 200,
+//     backgroundColor: 'red',
+//   },
+//   button: {
+//     backgroundColor: 'black',
+//     paddingHorizontal: 20,
+//     paddingVertical: 15,
+//     marginTop: 15,
+//   },
+//   buttonText: {
+//     color: '#fff',
+//     fontWeight: 'bold',
+//   },
+// });
+
+
+
+
+
+// =============================================== React lifecycle
+import React, { Component } from 'react';
+import {
+  NativeModules,
+  LayoutAnimation,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Button
+} from 'react-native';
+
+export default class Counter extends Component {
+  state = {
+    number: 0
+  }
+
+  constructor(props) {
+    super(props);
+    console.log('constructor');
+  }
+  
+  componentWillMount() {
+    console.log('componentWillMount (deprecated)');
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // 5 의 배수라면 리렌더링 하지 않음
+    console.log('shouldComponentUpdate');
+    if (nextState.number % 5 === 0) return false;
+    return true;
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log('componentWillUpdate');
+  }
+  
+  componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate');
+  }
+  
+
+  handleIncrease = () => {
+    const { number } = this.state;
+    this.setState({
+      number: number + 1
+    });
+  }
+
+  handleDecrease = () => {
+    this.setState(
+      ({ number }) => ({
+        number: number - 1
+      })
+    );
+  }
+  
+  render() {
+    console.log('render');
+    
+    return (
+      <View>
+        <Text>카운터 :</Text>
+        <View>
+          <Text>값: {this.state.number}</Text>
+        </View>
+        <Button onPress={this.handleIncrease} title='+'></Button>
+        <Button onPress={this.handleDecrease} title='-'></Button>
+      </View>
+    );
+  }
+
+}
