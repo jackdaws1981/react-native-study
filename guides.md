@@ -106,3 +106,129 @@ importantForAccessibility (Android)
     - componentDidUpdate
 - 컴포넌트 제거
     - componentWillUnmount
+
+
+
+# Improving User Experience
+일반적인 설정이 가능하다
+
+### Configure text inputs
+- 자동포커스 설정
+- placeholder 설정 , format 설정
+- 키보드타입 설정
+- 키보드 커스텀
+
+### Manage layout when keyboard is visible
+- 키보드 출력시 레이아웃 관리
+
+### Make tappable areas larger
+- hitSlop prop를 이용한 터치 영역 크기 설정
+
+### Use Android Ripple
+- 안드로이드의 경우 API 21부터 지원하는 리플디자인 사용
+
+### Screen orientation lock
+
+
+# Timers
+
+- 브라우져 타이머를 구현하고 있다
+    - setTimeout, clearTimeout
+    - setInterval, clearInterval
+    - setImmediate, clearImmediate
+    - requestAnimationFrame, cancelAnimationFrame
+
+`requestAnimationFrame는 단말마다 다를수가 있다. (iPhone5S의 경우 초당 1000이상이 호출된다 )`
+
+### InteractionManager
+- react-native는 자바스크립트를 실행하는 하나의 스레드위에서 동작한다
+- InteractionManager를 사용하면 시간이 오래걸리는 작업을 스케줄링할수 있다???
+
+### TimerMixin
+- 타이머관리를 제대로 해주지 못하면 컴포넌트가 언마운트되었을때 시간초과로 인해 크래시와 버그가 만들어질 가능성이 있다
+- TimerMixin을 사용하면 컴포넌트가 언마운트 되었을때 타이머 관련 리소스를 해제할수가 있다
+
+
+# 누구든지 하는 리액트 props/state
+
+## prop
+- 컴포넌트 호출시 넘겨주는 prop 데이터는 this.xxx 로 접근이 가능하다
+
+## defaultProps
+- prop 기본값설정
+
+
+## 함수형 컴포넌트
+- 기본 props만 받아와서 출력하는 컴포넌트의 경우 함수형태로 작성할수 있다
+
+```
+### 클래스 형태 MyName
+
+import React, { Component } from 'react';
+
+class MyName extends Component {
+  render() {
+    return (
+      <div>
+        안녕하세요! 제 이름은 <b>{this.props.name}</b> 입니다.
+      </div>
+    );
+  }
+}
+
+MyName.defaultProps = {
+  name: '기본이름'
+};
+
+export default MyName;
+
+
+### 함수 형태 MyName
+
+import React from 'react';
+
+const MyName = ({ name }) => {
+  return (
+    <div>
+      안녕하세요! 제 이름은 {name} 입니다.
+    </div>
+  );
+};
+
+export default MyName;
+
+```
+
+- 함수형태는 state와 lifecycle이 존재하지 않기때문에 , 좀더 빠르고, 메모리를 덜 사용한다 , 하지만 별 차이가 없다더라
+
+## state
+- 동적인 데이터를 다룰때 사용한다
+- 클래스필드나 생성자에서 사용할수가 있다
+
+## 메서드 작성
+
+```
+ !!! 아래와 같이 함수형으로 작성합시다 !!!
+ handleIncrease = () => {
+    this.setState({
+      number: this.state.number + 1
+    });
+  }
+
+ 만약 그렇지 않고 일반 함수 처럼 아래와 같이 작성한다면
+ handleIncrease() {
+    this.setState({
+      number: this.state.number + 1
+    });
+  }
+ this가 undefined로 나타나서 제대로 처리되지 않게 된답니다, 이유는 버튼의 클릭이벤트로 함수콜할때 this와의 연결이 끊겨버리게 되므로 constructor에서 귀찮은 바인딩 작업을 해주어야 한다
+```
+
+
+## setState 
+- state에 있는 값을 바꾸기 위해서는 무조건 this.setState를 거쳐야 한다.
+- setState를 호출하게 되면 무조건 리렌더링을 하도록 설계되어있다
+
+## 이벤트 설정
+- 이벤트 이름은 camelCase로 설정한다, " onclick -> onClick "
+- 이벤트에 전달해주는 값은 함수여야 한다
