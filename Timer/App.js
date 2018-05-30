@@ -15,11 +15,32 @@ import {
   Image
 } from 'react-native';
 
+import { StackNavigator } from 'react-navigation'
 
 
+class MainScreen extends Component {
+  static navigationOptions = {
+    title: 'Welcome',
+  };
+  render() {
+    // const { navigate } = this.props.navigation;
+    return (
+      <Button
+        title="Go to Jane's profile"
+        onPress={() =>
+          //navigate('Timer', { name: 'Jane' })
+          this.props.navigation.navigate('Timer')
+        }
+      />
+    );
+  }
+};
 
-type Props = {};
-export default class App extends Component<Props> {
+class TimerScreen extends Component {
+
+  static navigationOptions = {
+    title: 'Welcome',
+  };
 
   leadingZeros(n, digits) {
     var zero = '';
@@ -49,9 +70,9 @@ export default class App extends Component<Props> {
     // 1초당 타이머 시작 , setState로 rerender
     setInterval(()=>{
       this.setState( previousState => {
-        return {timeText : this.getDateText() };
+        return {timeText : this.getDateText() }
       })
-    },1000)
+    },1000);
   }
 
   // 내부 람다 정의
@@ -140,3 +161,28 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.35,
   },
 });
+
+
+
+export const SimpleAppNavigator = StackNavigator (
+  {
+    Home: {screen: MainScreen},
+    Timer:{screen: TimerScreen}
+  }
+);
+
+
+// 공식문서와 가이드가 다릅니다 ,,, 욕이 나옵니다
+const AppNavigation = () => (
+  <SimpleAppNavigator  />
+);
+
+export default class App extends React.Component {
+  render() {
+    return (
+        <AppNavigation/>
+    );
+  }
+}
+
+
