@@ -14,16 +14,22 @@ import {
   TouchableOpacity,
   Image,
   Animated,
-  Easing
+  Easing,
+  PushNotificationIOS
 } from 'react-native';
 
 import { StackNavigator } from 'react-navigation'
-
+import Tabbar from 'react-native-tabbar-bottom'
 
 class MainScreen extends Component {
   static navigationOptions = {
     title: '아아 페이스북',
   };
+
+  constructor(props) {
+    super(props)
+  }
+
   render() {
     return (
       <Button
@@ -136,7 +142,133 @@ class TimerScreen extends Component {
   }
 }
 
+export const SimpleAppNavigator = StackNavigator (
+  {
+    Home: {screen: MainScreen},
+    Timer:{screen: TimerScreen}
+  }
+);
+
+
+// 공식문서와 가이드가 다릅니다 ,,, 욕이 나옵니다
+const AppNavigation = () => (
+  <SimpleAppNavigator  />
+);
+
+// export default class App extends React.Component {
+//   render() {
+//     return (
+//         <AppNavigation/>
+//     );
+//   }
+// }
+
+
+export default class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      page: "HomeScreen",
+    }
+
+
+    var PushNotification = require('react-native-push-notification');
+
+    PushNotification.configure({
+
+      // (optional) Called when Token is generated (iOS and Android)
+      onRegister: function(token) {
+          console.log( 'TOKEN:', token );
+      },
+  
+      // (required) Called when a remote or local notification is opened or received
+      onNotification: function(notification) {
+          console.log( 'NOTIFICATION:', notification );
+  
+          // process the notification
+  
+          // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
+          notification.finish(PushNotificationIOS.FetchResult.NoData);
+      },
+  
+      // ANDROID ONLY: GCM Sender ID (optional - not required for local notifications, but is need to receive remote push notifications)
+      senderID: "YOUR GCM SENDER ID",
+  
+      // IOS ONLY (optional): default: all - Permissions to register.
+      permissions: {
+          alert: true,
+          badge: true,
+          sound: true
+      },
+  
+      // Should the initial notification be popped automatically
+      // default: true
+      popInitialNotification: true,
+  
+      /**
+        * (optional) default: true
+        * - Specified if permissions (ios) and token (android and ios) will requested or not,
+        * - if not, you must call PushNotificationsHandler.requestPermissions() later
+        */
+      requestPermissions: true,
+  });
+
+    PushNotification.localNotificationSchedule({
+      message: "My Notification Message", // (required)
+      date: new Date(Date.now() + (3 * 1000))
+    });
+
+    console.log('siodfuyaisdufhalksjdfh');
+  }
+
+  render() {
+    return (
+      <View style={styles.footerContanier}>
+
+        {this.state.page === "HomeScreen" && <Text>Home</Text>}
+        {this.state.page === "TimerScreen" && <SimpleAppNavigator/>}
+        {this.state.page === "1" && <Text>1</Text>}
+        {this.state.page === "2" && <Text>2</Text>}
+        {this.state.page === "3" && <Text>3</Text>}
+
+        <Tabbar
+          stateFunc={(tab) => {
+            this.setState({page: tab.page})
+          }}
+          activePage={this.state.page}
+          tabs={[
+            {
+              page: "HomeScreen",
+              iconText:"home"
+            },
+            {
+              page: "TimerScreen",
+              iconText:"Timer"
+            },
+            {
+              page: "1",
+              iconText:"1"
+            },
+            {
+              page: "2",
+              iconText:"2"
+            },
+            {
+              page: "3",
+              iconText:"3"
+            },
+          ]}
+        />
+      </View>
+    );
+  }
+}
+
+
 const styles = StyleSheet.create({
+  footerContanier:{
+    flex: 1
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -171,28 +303,3 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.35,
   },
 });
-
-
-
-export const SimpleAppNavigator = StackNavigator (
-  {
-    Home: {screen: MainScreen},
-    Timer:{screen: TimerScreen}
-  }
-);
-
-
-// 공식문서와 가이드가 다릅니다 ,,, 욕이 나옵니다
-const AppNavigation = () => (
-  <SimpleAppNavigator  />
-);
-
-export default class App extends React.Component {
-  render() {
-    return (
-        <AppNavigation/>
-    );
-  }
-}
-
-
